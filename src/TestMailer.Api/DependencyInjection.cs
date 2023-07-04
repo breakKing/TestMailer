@@ -1,4 +1,7 @@
-﻿namespace TestMailer.Api;
+﻿using TestMailer.Application;
+using TestMailer.Infrastructure;
+
+namespace TestMailer.Api;
 
 public static class DependencyInjection
 {
@@ -13,6 +16,10 @@ public static class DependencyInjection
         builder.Services.AddEndpointsApiExplorer();
         
         builder.Services.AddSwaggerGen();
+
+        builder.Services
+            .AddApplication()
+            .AddInfrastructure(builder.Configuration);
 
         return builder;
     }

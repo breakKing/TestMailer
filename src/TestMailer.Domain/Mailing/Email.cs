@@ -40,6 +40,12 @@ public sealed class Email
     /// </summary>
     public string? FailedMessage { get; private set; }
 
+    private Email()
+    {
+        Subject = string.Empty;
+        Body = string.Empty;
+    }
+
     /// <summary>
     /// Конструктор для письма
     /// </summary>

@@ -1,15 +1,14 @@
-﻿using System.Transactions;
-
-namespace TestMailer.Application.Common.DataAccess;
+﻿namespace TestMailer.Application.Common.DataAccess;
 
 /// <summary>
 /// Unit-of-work для управления транзакциями;
 /// </summary>
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
     /// <summary>
-    /// Создание области транзакции
+    /// Сохранение изменений
     /// </summary>
-    /// <returns>Disposable-объект области транзакции</returns>
-    TransactionScope CreateTransactionScope();
+    /// <param name="ct">Токен отмены</param>
+    /// <returns>Кол-во строк, затронутых в БД при выполнении операции</returns>
+    Task<int> SaveChangesAsync(CancellationToken ct = default);
 }

@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TestMailer.Application.Common.DataAccess;
 
 namespace TestMailer.Infrastructure.Persistence;
 
-public sealed class MailingDbContext : DbContext
+public sealed class MailingDbContext : DbContext, IUnitOfWork
 {
     /// <inheritdoc />
     public MailingDbContext(DbContextOptions options) : base(options)

@@ -11,6 +11,5 @@ public interface IEmailWriteRepository
     /// Добавление нового письма
     /// </summary>
     /// <param name="email">Сущность письма</param>
-    /// <returns></returns>
-    Task Add(Email email);
+    void Add(Email email);
 }
