@@ -5,7 +5,7 @@ namespace TestMailer.Application.Mailing.SendEmail;
 /// <summary>
 /// Обработчик команды по отправке письма
 /// </summary>
-public sealed class SendEmailCommandHandler : ICommandHandler<SendEmailCommand>
+internal sealed class SendEmailCommandHandler : ICommandHandler<SendEmailCommand>
 {
     /// <inheritdoc />
     public async Task<Result<bool>> Handle(SendEmailCommand request, CancellationToken cancellationToken)

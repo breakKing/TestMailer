@@ -4,7 +4,7 @@ using TestMailer.Domain.Mailing;
 
 namespace TestMailer.Infrastructure.Persistence.Configurations;
 
-public sealed class EmailConfiguration : IEntityTypeConfiguration<Email>
+internal sealed class EmailConfiguration : IEntityTypeConfiguration<Email>
 {
     /// <inheritdoc />
     public void Configure(EntityTypeBuilder<Email> builder)

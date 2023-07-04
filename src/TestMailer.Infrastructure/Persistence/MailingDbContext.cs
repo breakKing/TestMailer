@@ -3,7 +3,7 @@ using TestMailer.Application.Common.DataAccess;
 
 namespace TestMailer.Infrastructure.Persistence;
 
-public sealed class MailingDbContext : DbContext, IUnitOfWork
+internal sealed class MailingDbContext : DbContext, IUnitOfWork
 {
     /// <inheritdoc />
     public MailingDbContext(DbContextOptions options) : base(options)

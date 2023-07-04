@@ -3,7 +3,7 @@ using TestMailer.Domain.Mailing;
 
 namespace TestMailer.Infrastructure.Persistence.Repositories;
 
-public sealed class EmailWriteRepository : IEmailWriteRepository
+internal sealed class EmailWriteRepository : IEmailWriteRepository
 {
     private readonly MailingDbContext _context;
 

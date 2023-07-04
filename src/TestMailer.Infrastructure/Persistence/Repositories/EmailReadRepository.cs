@@ -6,7 +6,7 @@ using TestMailer.Domain.Mailing;
 namespace TestMailer.Infrastructure.Persistence.Repositories;
 
 /// <inheritdoc />
-public sealed class EmailReadRepository : IEmailReadRepository
+internal sealed class EmailReadRepository : IEmailReadRepository
 {
     private readonly MailingDbContext _context;
 

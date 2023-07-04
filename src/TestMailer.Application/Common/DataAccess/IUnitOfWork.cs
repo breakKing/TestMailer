@@ -1,7 +1,7 @@
 ﻿namespace TestMailer.Application.Common.DataAccess;
 
 /// <summary>
-/// Unit-of-work для управления транзакциями;
+/// Unit-of-work для управления сохранением и транзакциями
 /// </summary>
 public interface IUnitOfWork : IDisposable
 {
