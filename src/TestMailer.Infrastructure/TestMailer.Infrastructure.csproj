@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TestMailer.Application\TestMailer.Application.csproj" />
+      <ProjectReference Include="..\TestMailer.Domain\TestMailer.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
