@@ -2,6 +2,9 @@
 
 namespace TestMailer.Application.Mailing.GetEmails;
 
+/// <summary>
+/// Обработчик запроса на выгрузку писем
+/// </summary>
 public sealed class GetEmailsQueryHandler : IQueryHandler<GetEmailsQuery, GetEmailsResponse>
 {
     /// <inheritdoc />

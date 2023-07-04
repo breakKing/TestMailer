@@ -1,5 +1,7 @@
-﻿using TestMailer.Application.Common.Pagination;
+﻿namespace TestMailer.Application.Mailing.GetEmails;
 
-namespace TestMailer.Application.Mailing.GetEmails;
-
-public sealed record GetEmailsResponse(PagedList<EmailItemDto> Emails);
+/// <summary>
+/// Ответ с письмами
+/// </summary>
+/// <param name="Items">Список писем</param>
+public sealed record GetEmailsResponse(List<EmailItemDto> Items);

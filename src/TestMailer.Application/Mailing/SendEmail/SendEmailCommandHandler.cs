@@ -2,6 +2,9 @@
 
 namespace TestMailer.Application.Mailing.SendEmail;
 
+/// <summary>
+/// Обработчик команды по отправке письма
+/// </summary>
 public sealed class SendEmailCommandHandler : ICommandHandler<SendEmailCommand>
 {
     /// <inheritdoc />

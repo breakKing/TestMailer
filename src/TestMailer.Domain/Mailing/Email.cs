@@ -33,7 +33,7 @@ public sealed class Email
     /// <summary>
     /// Результат отправки
     /// </summary>
-    public EmailResult Result { get; private set; } = EmailResult.Undefined;
+    public EmailResult Result { get; private set; } = EmailResult.Processing;
     
     /// <summary>
     /// Информация об ошибке отправки (если есть)
@@ -41,7 +41,7 @@ public sealed class Email
     public string? FailedMessage { get; private set; }
 
     /// <summary>
-    /// Основной конструктор для письма
+    /// Конструктор для письма
     /// </summary>
     /// <param name="subject">Тема</param>
     /// <param name="body">Тело</param>
@@ -51,7 +51,25 @@ public sealed class Email
         Id = Guid.NewGuid();
         Subject = subject;
         Body = body;
-        
+
         _recipients.AddRange(recipients);
+    }
+
+    /// <summary>
+    /// Пометить письмо как удачно отправленное
+    /// </summary>
+    public void MarkAsSent()
+    {
+        Result = EmailResult.Ok;
+    }
+
+    /// <summary>
+    /// Пометить письмо как неотправленное (с ошибкой)
+    /// </summary>
+    /// <param name="failedMessage"></param>
+    public void MarkAsFailed(string failedMessage)
+    {
+        Result = EmailResult.Failed;
+        FailedMessage = failedMessage;
     }
 }

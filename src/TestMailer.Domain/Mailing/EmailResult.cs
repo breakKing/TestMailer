@@ -1,8 +1,14 @@
 ﻿namespace TestMailer.Domain.Mailing;
 
+/// <summary>
+/// Возможные результаты отправки письма
+/// </summary>
 public enum EmailResult
 {
-    Undefined = 0,
+    /// <summary>
+    /// В обработке
+    /// </summary>
+    Processing = 0,
     Ok = 1,
     Failed = 2
 }
