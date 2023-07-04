@@ -12,5 +12,5 @@ public interface IEmailReadRepository
     /// </summary>
     /// <param name="ct">Токен отмены</param>
     /// <returns></returns>
-    Task<IReadOnlyList<EmailItemDto>> GetListAsync(CancellationToken ct = default);
+    Task<List<EmailItemDto>> GetListAsync(CancellationToken ct = default);
 }
