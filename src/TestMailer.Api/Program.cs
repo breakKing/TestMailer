@@ -1,4 +1,4 @@
-using TestMailer.Api;
+using TestMailer.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureServices();

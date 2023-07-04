@@ -18,11 +18,13 @@ public sealed class EmailReadRepository : IEmailReadRepository
     /// <inheritdoc />
     public Task<List<EmailItemDto>> GetListAsync(CancellationToken ct = default)
     {
-        return _context.Set<Email>()
+        var query = _context.Set<Email>()
             .Select(e => new EmailItemDto(
-                e.Subject, 
-                e.Body, 
-                e.Recipients.ToList()))
-            .ToListAsync(ct);
+                e.Subject,
+                e.Body,
+                EF.Property<List<string>>(e, "_recipients")))
+            .AsNoTracking();
+        
+        return query.ToListAsync(ct);
     }
 }

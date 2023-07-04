@@ -5,15 +5,17 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>CS1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
+        <PackageReference Include="FastEndpoints" Version="5.13.0" />
+        <PackageReference Include="FastEndpoints.Swagger" Version="5.13.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -23,12 +25,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <ProjectReference Include="..\TestMailer.Application\TestMailer.Application.csproj" />
+      <ProjectReference Include="..\TestMailer.Infrastructure\TestMailer.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TestMailer.Application\TestMailer.Application.csproj" />
-      <ProjectReference Include="..\TestMailer.Infrastructure\TestMailer.Infrastructure.csproj" />
+      <Folder Include="Mailing\SendEmail\" />
     </ItemGroup>
 
 </Project>
