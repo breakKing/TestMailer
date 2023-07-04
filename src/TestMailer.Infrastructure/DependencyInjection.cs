@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TestMailer.Application.Common.DataAccess;
 using TestMailer.Application.Mailing;
+using TestMailer.Infrastructure.Emailing;
 using TestMailer.Infrastructure.Persistence;
 using TestMailer.Infrastructure.Persistence.Repositories;
 
@@ -37,7 +38,14 @@ public static class DependencyInjection
         services.AddScoped<IEmailWriteRepository, EmailWriteRepository>();
 
         services.AddScoped<IUnitOfWork, MailingDbContext>();
-        
+
+        services.AddOptions<SmtpConfiguration>()
+            .BindConfiguration(SmtpConfiguration.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddTransient<IEmailService, EmailService>();
+
         return services;
     }
 }
