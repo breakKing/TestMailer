@@ -24,20 +24,6 @@ public sealed class Result<TData>: OneOfBase<TData, Error[]>
     }
 
     /// <summary>
-    /// Конвертация данных или ошибки в объект
-    /// </summary>
-    /// <param name="dataFunc">Построитель результирующего объекта в случае успеха (наличия данных)</param>
-    /// <param name="errorFunc">Построитель результирующего объекта в случае ошибок</param>
-    /// <typeparam name="TOutput">Тип возвращаемых данных</typeparam>
-    /// <returns>Объект, построенный по одному из заданных построителей</returns>
-    public TOutput Match<TOutput>(
-        Func<TData, TOutput> dataFunc,
-        Func<Error[], TOutput> errorFunc)
-    {
-        return IsSucceeded ? dataFunc.Invoke(AsT0) : errorFunc.Invoke(AsT1);
-    }
-
-    /// <summary>
     /// Создание результата в случае успеха
     /// </summary>
     /// <param name="data">Данные, которые необходимо записать в результат</param>
