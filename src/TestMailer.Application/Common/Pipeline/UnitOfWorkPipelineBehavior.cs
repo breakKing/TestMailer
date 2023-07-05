@@ -10,6 +10,7 @@ namespace TestMailer.Application.Common.Pipeline;
 /// Поведение пайплайна для обёртки каждой команды в транзакцию
 /// </summary>
 /// <typeparam name="TCommand">Тип команды</typeparam>
+/// <typeparam name="TResponse">Тип ответа</typeparam>
 internal sealed class UnitOfWorkPipelineBehavior<TCommand, TResponse> : IPipelineBehavior<TCommand, TResponse>
     where TCommand : ICommand
     where TResponse : IOneOf
