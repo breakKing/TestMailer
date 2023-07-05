@@ -6,7 +6,7 @@ namespace TestMailer.Application.Common.Handling;
 /// Кастомный класс результата выполнения запросов и команд
 /// </summary>
 /// <typeparam name="TData">Тип данных, возвращаемых в случае успеха выполнения запросов и команд</typeparam>
-public sealed class Result<TData>: OneOfBase<TData, Error[]>
+public class Result<TData>: OneOfBase<TData, Error[]>
 {
     /// <summary>
     /// Результат является удачным

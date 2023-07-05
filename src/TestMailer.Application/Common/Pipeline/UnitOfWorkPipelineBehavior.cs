@@ -1,6 +1,5 @@
 ﻿using System.Transactions;
 using MediatR;
-using OneOf;
 using TestMailer.Application.Common.DataAccess;
 using TestMailer.Application.Common.Handling;
 
@@ -13,7 +12,7 @@ namespace TestMailer.Application.Common.Pipeline;
 /// <typeparam name="TResponse">Тип ответа</typeparam>
 internal sealed class UnitOfWorkPipelineBehavior<TCommand, TResponse> : IPipelineBehavior<TCommand, TResponse>
     where TCommand : ICommand
-    where TResponse : IOneOf
+    where TResponse : Result<bool>
 {
     private readonly IUnitOfWork _unitOfWork;
 
