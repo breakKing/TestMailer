@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 
 namespace TestMailer.Application.Common.Handling;
 
@@ -6,7 +7,7 @@ namespace TestMailer.Application.Common.Handling;
 /// Обработчик команды
 /// </summary>
 /// <typeparam name="TCommand">Тип обрабатываемой команды</typeparam>
-public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand, Result<bool>>
+public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand, ErrorOr<bool>>
     where TCommand : ICommand
 {
     

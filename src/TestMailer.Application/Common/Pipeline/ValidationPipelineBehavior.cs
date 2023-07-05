@@ -1,16 +1,17 @@
-﻿using FluentValidation;
+﻿using ErrorOr;
+using FluentValidation;
 using MediatR;
-using TestMailer.Application.Common.Handling;
 
 namespace TestMailer.Application.Common.Pipeline;
 
 /// <summary>
 /// Поведение пайплайна для проведения валидации запросов и команд
 /// </summary>
-/// <typeparam name="TRequest"></typeparam>
-/// <typeparam name="TResponse"></typeparam>
-internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>> 
+/// <typeparam name="TRequest">Тип запроса</typeparam>
+/// <typeparam name="TResponse">Тип ответа</typeparam>
+internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
     where TRequest : notnull
+    where TResponse : IErrorOr, new()
 {
     private const string ValidationErrorCode = "Validation";
     
@@ -22,9 +23,9 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelin
     }
 
     /// <inheritdoc />
-    public async Task<Result<TResponse>> Handle(
+    public async Task<TResponse> Handle(
         TRequest request, 
-        RequestHandlerDelegate<Result<TResponse>> next, 
+        RequestHandlerDelegate<TResponse> next, 
         CancellationToken cancellationToken)
     {
         if (!_validators.Any())
@@ -52,10 +53,13 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelin
         {
             var errors = errorsDictionary
                 .SelectMany(e => e.Value)
-                .Select(e => new Error(ValidationErrorCode, e))
+                .Select(e => Error.Validation(ValidationErrorCode, e))
                 .ToArray();
+
+            var response = new TResponse();
+            response.Errors!.AddRange(errors);
             
-            return Result<TResponse>.Failure(errors);
+            return response;
         }
         
         return await next();

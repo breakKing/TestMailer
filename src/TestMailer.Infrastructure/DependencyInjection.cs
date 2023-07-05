@@ -33,11 +33,11 @@ public static class DependencyInjection
 
             options.UseSnakeCaseNamingConvention();
         });
+        
+        services.AddScoped<IUnitOfWork, MailingDbContext>(provider => provider.GetRequiredService<MailingDbContext>());
 
         services.AddScoped<IEmailReadRepository, EmailReadRepository>();
         services.AddScoped<IEmailWriteRepository, EmailWriteRepository>();
-
-        services.AddScoped<IUnitOfWork, MailingDbContext>();
 
         services.AddOptions<SmtpConfiguration>()
             .BindConfiguration(SmtpConfiguration.SectionName)

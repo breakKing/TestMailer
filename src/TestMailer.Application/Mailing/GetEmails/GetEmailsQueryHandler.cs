@@ -1,4 +1,5 @@
-﻿using TestMailer.Application.Common.Handling;
+﻿using ErrorOr;
+using TestMailer.Application.Common.Handling;
 
 namespace TestMailer.Application.Mailing.GetEmails;
 
@@ -15,12 +16,12 @@ internal sealed class GetEmailsQueryHandler : IQueryHandler<GetEmailsQuery, GetE
     }
 
     /// <inheritdoc />
-    public async Task<Result<GetEmailsResponse>> Handle(GetEmailsQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<GetEmailsResponse>> Handle(GetEmailsQuery request, CancellationToken cancellationToken)
     {
         var data = await _repository.GetListAsync(cancellationToken);
 
         var response = new GetEmailsResponse(data);
 
-        return Result<GetEmailsResponse>.Success(response);
+        return response;
     }
 }

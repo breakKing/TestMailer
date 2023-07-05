@@ -19,7 +19,8 @@ public static class DependencyInjection
         services.AddMediatR(options =>
         {
             options.RegisterServicesFromAssemblyContaining<IApplicationAssemblyMarker>();
-            
+            options.Lifetime = ServiceLifetime.Scoped;
+
             options.AddOpenBehavior(typeof(ExceptionHandlerPipelineBehavior<,>));
             options.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
             options.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));

@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Microsoft.Extensions.Logging;
-using TestMailer.Application.Common.Handling;
 
 namespace TestMailer.Application.Common.Pipeline;
 
@@ -10,8 +10,9 @@ namespace TestMailer.Application.Common.Pipeline;
 /// <typeparam name="TRequest">Тип запроса/команды</typeparam>
 /// <typeparam name="TResponse">Тип ответа</typeparam>
 internal sealed class ExceptionHandlerPipelineBehavior<TRequest, TResponse> : 
-    IPipelineBehavior<TRequest, Result<TResponse>> 
+    IPipelineBehavior<TRequest, TResponse> 
     where TRequest : notnull
+    where TResponse : IErrorOr, new()
 {
     private const string UnhandledExceptionErrorCode = "Exception";
     
@@ -23,9 +24,9 @@ internal sealed class ExceptionHandlerPipelineBehavior<TRequest, TResponse> :
     }
 
     /// <inheritdoc />
-    public async Task<Result<TResponse>> Handle(
+    public async Task<TResponse> Handle(
         TRequest request, 
-        RequestHandlerDelegate<Result<TResponse>> next, 
+        RequestHandlerDelegate<TResponse> next, 
         CancellationToken cancellationToken)
     {
         try
@@ -36,8 +37,12 @@ internal sealed class ExceptionHandlerPipelineBehavior<TRequest, TResponse> :
         {
             _logger.LogError("An exception was caught: {@Exception}", ex);
 
-            var error = new Error(UnhandledExceptionErrorCode, ex.Message);
-            return Result<TResponse>.Failure(error);
+            var error = Error.Unexpected(UnhandledExceptionErrorCode, ex.Message);
+
+            var response = new TResponse();
+            response.Errors!.Add(error);
+            
+            return response;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using ErrorOr;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -20,7 +21,7 @@ internal sealed class EmailService : IEmailService
     }
 
     /// <inheritdoc />
-    public async Task<Result<bool>> SendEmailAsync(Email email, CancellationToken ct = default)
+    public async Task<ErrorOr<bool>> SendEmailAsync(Email email, CancellationToken ct = default)
     {
         try
         {
@@ -30,12 +31,12 @@ internal sealed class EmailService : IEmailService
 
             await SendViaSmtpAsync(mimeMessage, ct);
 
-            return Result<bool>.Success(true);
+            return true;
         }
         catch (Exception ex)
         {
-            var error = new Error(SendEmailErrors.Code, ex.Message);
-            return Result<bool>.Failure(error);
+            var error = Error.Failure(SendEmailErrors.Code, ex.Message);
+            return error;
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using TestMailer.Application.Common.Handling;
+﻿using ErrorOr;
+using TestMailer.Application.Common.Handling;
 using TestMailer.Domain.Mailing;
 
 namespace TestMailer.Application.Mailing.SendEmail;
@@ -18,7 +19,7 @@ internal sealed class SendEmailCommandHandler : ICommandHandler<SendEmailCommand
     }
 
     /// <inheritdoc />
-    public async Task<Result<bool>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<bool>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
     {
         var email = new Email(
             request.Subject,
@@ -29,10 +30,10 @@ internal sealed class SendEmailCommandHandler : ICommandHandler<SendEmailCommand
 
         sendResult.Switch(
             _ => email.MarkAsSent(),
-            errors => email.MarkAsFailed(errors.FirstOrDefault()?.Description ?? string.Empty));
+            errors => email.MarkAsFailed(errors.FirstOrDefault().Description ?? string.Empty));
         
         _repository.Add(email);
 
-        return Result<bool>.Success(true);
+        return true;
     }
 }

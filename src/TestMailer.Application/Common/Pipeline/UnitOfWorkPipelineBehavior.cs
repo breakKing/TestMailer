@@ -12,7 +12,6 @@ namespace TestMailer.Application.Common.Pipeline;
 /// <typeparam name="TResponse">Тип ответа</typeparam>
 internal sealed class UnitOfWorkPipelineBehavior<TCommand, TResponse> : IPipelineBehavior<TCommand, TResponse>
     where TCommand : ICommand
-    where TResponse : Result<bool>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -27,15 +26,14 @@ internal sealed class UnitOfWorkPipelineBehavior<TCommand, TResponse> : IPipelin
         RequestHandlerDelegate<TResponse> next, 
         CancellationToken cancellationToken)
     {
-        TResponse result;
-        
-        using (var transactionScope = new TransactionScope())
+        using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
-            result = await next();
+            var result = await next();
+        
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             transactionScope.Complete();
+
+            return result;
         }
-        
-        return result;
     }
 }

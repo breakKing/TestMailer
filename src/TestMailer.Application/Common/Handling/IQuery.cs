@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 
 namespace TestMailer.Application.Common.Handling;
 
@@ -6,7 +7,7 @@ namespace TestMailer.Application.Common.Handling;
 /// Запрос, не мутирующий состояние системы и возвращающий данные
 /// </summary>
 /// <typeparam name="TResponse">Тип возвращаемых данных</typeparam>
-public interface IQuery<TResponse> : IRequest<Result<TResponse>>
+public interface IQuery<TResponse> : IRequest<ErrorOr<TResponse>>
 {
     
 }

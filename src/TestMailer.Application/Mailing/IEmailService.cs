@@ -1,4 +1,4 @@
-﻿using TestMailer.Application.Common.Handling;
+﻿using ErrorOr;
 using TestMailer.Domain.Mailing;
 
 namespace TestMailer.Application.Mailing;
@@ -14,5 +14,5 @@ public interface IEmailService
     /// <param name="email">Сущность письма</param>
     /// <param name="ct">Токен отмены</param>
     /// <returns>Результат отправки с описанием ошибки (если есть)</returns>
-    Task<Result<bool>> SendEmailAsync(Email email, CancellationToken ct = default);
+    Task<ErrorOr<bool>> SendEmailAsync(Email email, CancellationToken ct = default);
 }
