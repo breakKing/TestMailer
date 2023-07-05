@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using TestMailer.Application.Common.Pipeline;
 
 namespace TestMailer.Application;
@@ -15,12 +16,17 @@ public static class DependencyInjection
     /// <returns>Контейнер сервисов с добавленными сервисами</returns>
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        return services.AddMediatR(options =>
+        services.AddMediatR(options =>
         {
             options.RegisterServicesFromAssemblyContaining<IApplicationAssemblyMarker>();
             
             options.AddOpenBehavior(typeof(ExceptionHandlerPipelineBehavior<,>));
+            options.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
             options.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
         });
+
+        services.AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>();
+
+        return services;
     }
 }
