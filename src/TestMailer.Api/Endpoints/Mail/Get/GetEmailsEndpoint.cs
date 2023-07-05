@@ -36,14 +36,7 @@ public sealed class GetEmailsEndpoint : EndpointWithoutRequestBase<GetEmailsApiR
         
         var response = await _sender.Send(query, ct);
 
-        var task = response.Match(
-            data => SendDataAsync(MapToApiResponse(data), ct: ct),
-            errors => SendErrorsAsync(
-                errors.Select(e => e.Description).ToList(),
-                HttpStatusCode.BadRequest,
-                ct));
-
-        await task;
+        await SendResponseAsync(response, MapToApiResponse, ct);
     }
 
     private static GetEmailsApiResponse MapToApiResponse(GetEmailsResponse response)
@@ -52,7 +45,10 @@ public sealed class GetEmailsEndpoint : EndpointWithoutRequestBase<GetEmailsApiR
             .Select(e => new EmailItemApiDto(
                 e.Subject,
                 e.Body,
-                e.Recipients))
+                e.Recipients,
+                e.CreatedAt,
+                e.Result.ToString(),
+                e.FailedMessage))
             .ToList();
 
         return new GetEmailsApiResponse(items);

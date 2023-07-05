@@ -56,10 +56,7 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelin
                 .Select(e => Error.Validation(ValidationErrorCode, e))
                 .ToArray();
 
-            var response = new TResponse();
-            response.Errors!.AddRange(errors);
-            
-            return response;
+            return (TResponse)(dynamic)errors;
         }
         
         return await next();

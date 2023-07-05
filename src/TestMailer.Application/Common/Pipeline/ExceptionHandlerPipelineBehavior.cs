@@ -39,10 +39,7 @@ internal sealed class ExceptionHandlerPipelineBehavior<TRequest, TResponse> :
 
             var error = Error.Unexpected(UnhandledExceptionErrorCode, ex.Message);
 
-            var response = new TResponse();
-            response.Errors!.Add(error);
-            
-            return response;
+            return (TResponse)(dynamic)error;
         }
     }
 }

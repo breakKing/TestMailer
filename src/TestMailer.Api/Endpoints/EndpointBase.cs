@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using ErrorOr;
 
 namespace TestMailer.Api.Endpoints;
 
@@ -52,6 +53,30 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, Api
         CancellationToken ct = default)
     {
         await SendErrorsAsync(new List<string> { error }, statusCode, ct);
+    }
+
+    /// <summary>
+    /// Отправка ответа на основе результата, полученного с уровня приложения (от запроса/команды)
+    /// </summary>
+    /// <param name="result">Ответ на запрос/команду</param>
+    /// <param name="apiResponseBuilder">
+    /// Функция для построения ответа от api при успешном выполнении запроса/команды
+    /// </param>
+    /// <param name="ct">Токен отмены</param>
+    /// <typeparam name="TResult">Тип запроса/команды</typeparam>
+    protected async Task SendResponseAsync<TResult>(
+        ErrorOr<TResult> result, 
+        Func<TResult, TResponse> apiResponseBuilder,
+        CancellationToken ct = default)
+    {
+        var task = result.Match(
+            data => SendDataAsync(apiResponseBuilder.Invoke(data), ct: ct),
+            errors => SendErrorsAsync(
+                errors.Select(e => e.Description).ToList(),
+                HttpStatusCode.BadRequest,
+                ct));
+
+        await task;
     }
 
     /// <summary>

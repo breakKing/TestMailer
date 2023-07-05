@@ -37,8 +37,8 @@ public sealed class SendEmailEndpoint : EndpointBase<SendEmailApiRequest, SendEm
             req.Body,
             req.Recipients);
 
-        await _sender.Send(command, ct);
-
-        await SendDataAsync(new(), ct: ct);
+        var response = await _sender.Send(command, ct);
+        
+        await SendResponseAsync(response, _ => new(), ct);
     }
 }

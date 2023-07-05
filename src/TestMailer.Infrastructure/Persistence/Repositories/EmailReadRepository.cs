@@ -19,10 +19,14 @@ internal sealed class EmailReadRepository : IEmailReadRepository
     public Task<List<EmailItemDto>> GetListAsync(CancellationToken ct = default)
     {
         var query = _context.Set<Email>()
+            .OrderByDescending(e => e.CreatedAt)
             .Select(e => new EmailItemDto(
                 e.Subject,
                 e.Body,
-                EF.Property<List<string>>(e, "_recipients")))
+                EF.Property<List<string>>(e, "_recipients"),
+                e.CreatedAt,
+                e.Result,
+                e.FailedMessage))
             .AsNoTracking();
         
         return query.ToListAsync(ct);

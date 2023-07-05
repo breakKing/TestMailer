@@ -26,7 +26,7 @@ public static class DependencyInjection
             options.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
         });
 
-        services.AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>();
+        services.AddValidatorsFromAssemblyContaining<IApplicationAssemblyMarker>(includeInternalTypes: true);
 
         return services;
     }

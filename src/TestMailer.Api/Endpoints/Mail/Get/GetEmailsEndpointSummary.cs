@@ -18,7 +18,21 @@ public sealed class GetEmailsEndpointSummary : EndpointSummaryBase
                     {
                         "test1@example.com", 
                         "test2@example.com"
-                    })
+                    },
+                    DateTimeOffset.UtcNow,
+                    "Ok",
+                    null),
+                new EmailItemApiDto(
+                    "Приветствие 2", 
+                    "Привет, мир 2!", 
+                    new List<string>
+                    {
+                        "test1@example.com", 
+                        "test2@example.com"
+                    },
+                    DateTimeOffset.UtcNow,
+                    "Failed",
+                    "Описание ошибки")
             });
     
     public GetEmailsEndpointSummary()
