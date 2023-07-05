@@ -34,6 +34,6 @@ internal sealed class SendEmailCommandHandler : ICommandHandler<SendEmailCommand
         
         _repository.Add(email);
 
-        return true;
+        return sendResult;
     }
 }
