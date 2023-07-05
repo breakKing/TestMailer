@@ -2,12 +2,12 @@
 using FluentAssertions;
 using TestMailer.Application.Mailing.SendEmail;
 
-namespace TestMailer.Tests.Unit.Mailing.SendEmail;
+namespace TestMailer.Tests.Unit.Mailing.SendEmail.Handler;
 
-public class SendEmailTests
+public class SendEmailCommandHandlerTests
 {
     [Fact]
-    public async Task SendEmailCommand_ShouldWriteAndReturnError_WhenEmailFailedToBeSent()
+    public async Task Handler_ShouldWriteAndReturnError_WhenEmailFailedToBeSent()
     {
         // Arrange
         var writeRepoMock = new EmailWriteRepoMock();
@@ -19,7 +19,7 @@ public class SendEmailTests
         var command = new SendEmailCommand(
             "Test subject", 
             "Test message", 
-            new Collection<string> { "test@example.com" });
+            new [] { "test@example.com" });
 
         var response = await handler.Handle(command, CancellationToken.None);
 
@@ -35,7 +35,7 @@ public class SendEmailTests
     }
     
     [Fact]
-    public async Task SendEmailCommand_ShouldReturnOkResult_WhenEmailIsSuccessfullySent()
+    public async Task Handler_ShouldReturnOkResult_WhenEmailIsSuccessfullySent()
     {
         // Arrange
         var writeRepoMock = new EmailWriteRepoMock();
@@ -47,7 +47,7 @@ public class SendEmailTests
         var command = new SendEmailCommand(
             "Test subject", 
             "Test message", 
-            new Collection<string> { "test@example.com" });
+            new [] { "test@example.com" });
 
         var response = await handler.Handle(command, CancellationToken.None);
 
