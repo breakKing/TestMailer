@@ -19,6 +19,12 @@ public abstract class EndpointGroupBase : Group
     /// </param>
     private void ConfigureBasicParams(string groupName, string routePrefix)
     {
-        Configure(routePrefix, ep => ep.Tags(groupName));
+        Configure(routePrefix, ep =>
+        {
+            ep.Tags(groupName);
+            ep.Options(o => o
+                .WithGroupName(groupName)
+                .WithTags(groupName));
+        });
     }
 }

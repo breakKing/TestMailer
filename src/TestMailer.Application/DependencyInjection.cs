@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TestMailer.Application.Common.Pipeline;
 
 namespace TestMailer.Application;
 
@@ -17,6 +18,9 @@ public static class DependencyInjection
         return services.AddMediatR(options =>
         {
             options.RegisterServicesFromAssemblyContaining<IApplicationAssemblyMarker>();
+            
+            options.AddOpenBehavior(typeof(ExceptionHandlerPipelineBehavior<,>));
+            options.AddOpenBehavior(typeof(UnitOfWorkPipelineBehavior<,>));
         });
     }
 }

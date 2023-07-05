@@ -11,4 +11,4 @@ namespace TestMailer.Application.Mailing.SendEmail;
 public sealed record SendEmailCommand(
     string Subject,
     string Body,
-    List<string> Recipients) : ICommand;
+    IReadOnlyList<string> Recipients) : ICommand;

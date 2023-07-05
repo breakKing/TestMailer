@@ -63,6 +63,8 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, Api
         EndpointSummaryBase summary, 
         params HttpStatusCode[] statusCodes)
     {
+        DontAutoTag();
+        
         Description(desc =>
         {
             foreach (var code in statusCodes)
@@ -70,7 +72,7 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, Api
                 desc.Produces<ApiResponse<TResponse>>((int)code);
             }
         });
-
+        
         Summary(summary);
     }
 }

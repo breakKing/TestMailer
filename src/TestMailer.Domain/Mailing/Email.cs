@@ -52,7 +52,7 @@ public sealed class Email
     /// <param name="subject">Тема</param>
     /// <param name="body">Тело</param>
     /// <param name="recipients">Получатели</param>
-    public Email(string subject, string body, ICollection<string> recipients)
+    public Email(string subject, string body, IEnumerable<string> recipients)
     {
         Id = Guid.NewGuid();
         Subject = subject;
